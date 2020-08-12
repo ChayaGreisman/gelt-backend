@@ -13,6 +13,11 @@ class CategoriesController < ApplicationController
 
     def destroy
         category=Category.find(params[:id])
+
+        category.transactions.each do |transaction|
+            transaction.update(category_id: ' ')
+        end
+
         category.destroy
         render json: category
     end
