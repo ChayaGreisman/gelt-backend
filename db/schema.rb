@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_221044) do
+ActiveRecord::Schema.define(version: 2020_08_14_165938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(version: 2020_08_11_221044) do
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
+  create_table "cards", force: :cascade do |t|
+    t.string "name"
+    t.string "company"
+    t.string "bank"
+    t.string "bank_url"
+    t.string "crdit_type"
+    t.string "user_type"
+    t.integer "annual_fee"
+    t.boolean "best"
+    t.string "application_url"
+    t.string "img_url"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.float "budgeted_amount"
@@ -35,6 +51,15 @@ ActiveRecord::Schema.define(version: 2020_08_11_221044) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "saved_cards", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "card_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["card_id"], name: "index_saved_cards_on_card_id"
+    t.index ["user_id"], name: "index_saved_cards_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -60,6 +85,8 @@ ActiveRecord::Schema.define(version: 2020_08_11_221044) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "saved_cards", "cards"
+  add_foreign_key "saved_cards", "users"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "categories"
 end

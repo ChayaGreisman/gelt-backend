@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :saved_cards
+  resources :cards
   resources :transactions
   resources :categories
   resources :accounts
