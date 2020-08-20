@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
     def index
         users = User.all
-        render :json => users.to_json(:include => {:accounts => {:include=> :transactions}, :categories => {:include=> :transactions}, :cards => {:except=> :created_at}})
+        render :json => users.to_json(:include => {:accounts => {:include=> :transactions}, :categories => {:include=> :transactions}, :cards => {:except=> :created_at}, :notes => {:except=> :created_at}})
     end
     
     def create
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         Category.create(user_id: user.id, name: "Charity & Gifts", budgeted_amount: 250.00)
         Category.create(user_id: user.id, name: "Misc.", budgeted_amount: 100.00)
 
-        render :json => user.to_json(:include => {:accounts => {:include=> :transactions}, :categories => {:include=> :transactions}, :cards => {:except=> :created_at}})
+        render :json => user.to_json(:include => {:accounts => {:include=> :transactions}, :categories => {:include=> :transactions}, :cards => {:except=> :created_at}, :notes => {:except=> :created_at}})
     end
 
     private

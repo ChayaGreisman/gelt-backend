@@ -13,7 +13,7 @@ class SavedCardsController < ApplicationController
     def destroy
         saved_card = SavedCard.find(params[:id])
         saved_card.destroy
-        render json: saved_card
+        render json: saved_card, include: [:user]
     end
 
     private
